@@ -12,3 +12,5 @@ RoxygenNote: 7.3.2
 Imports:
   ggplot2,
   stats
+URL: https://github.com/brandanrosa/RosaDSA5403lab2
+BugReports: https://github.com/brandanrosa/RosaDSA5403lab2/issues
