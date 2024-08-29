@@ -11,6 +11,11 @@ LazyData: true
 RoxygenNote: 7.3.2
 Imports:
   ggplot2,
-  stats
+  stats,
+  shiny
 URL: https://github.com/brandanrosa/RosaDSA5403lab2
 BugReports: https://github.com/brandanrosa/RosaDSA5403lab2/issues
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
