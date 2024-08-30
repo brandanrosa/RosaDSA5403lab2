@@ -37,7 +37,7 @@ This package contains a function, `shinycoins()`, which will open the shiny app 
 
 A screenshot of the app in action is below.
 
-![](aa.png)
+![](bb.png)
 
 The shiny app can be accessed in an active `R` session by running the following code:
 
