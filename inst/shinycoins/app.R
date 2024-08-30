@@ -72,15 +72,20 @@ myBCI <- function(theta, prior, n, z, alpha = 0.05) {
 
   L <- max(which(cp < alpha/2))
   U <- min(which(cp > 1 - alpha/2))
-  BCI <- theta[c(L, U)]
-  BCI
+  ll <- theta[L]
+  uu <- theta[U]
+  #BCI <- theta[c(L, U)]
+
+  dff <- data.frame(ll, uu)
+  names(dff) <- c("BCI - Lower", "BCI - Upper")
+  dff
 }
 
-# Define UI
+# UI
 ui <- fluidPage(
   theme = bslib::bs_theme(bootswatch = "darkly"),
 
-    # Application title
+    # Title
     titlePanel("Shiny Coins"),
 
     # Sidebar
@@ -99,11 +104,12 @@ ui <- fluidPage(
             sliderInput("alpha",
                         "Alpha Level",
                         min = 0,
-                        max = 1,
-                        value = 0.05)
+                        max = 0.25,
+                        value = 0.05,
+                        step = 0.01)
         ),
 
-        # mainpanel
+        # Main Panel
         mainPanel(
            plotOutput("distPlot"),
            tableOutput("tab")
@@ -111,7 +117,7 @@ ui <- fluidPage(
     )
 )
 
-# Define server logic required to draw a histogram
+# Server
 server <- function(input, output) {
 
     len <- reactive(input$theta)
@@ -119,15 +125,24 @@ server <- function(input, output) {
     priorr <- reactive(input$prior)
     alphaa <- reactive(input$alpha)
 
+    bci <- reactive(myBCI(theta = thetaa(),
+                 prior = priorr(),
+                 n = 10,
+                 z = 4,
+                 alpha = alphaa()))
+
     output$distPlot <- renderPlot({
-      coin(theta = thetaa(), prior = priorr(), n = 10, z = 4, alpha = alphaa())
+      coin(theta = thetaa(),
+           prior = priorr(),
+           n = 10,
+           z = 4,
+           alpha = alphaa())
     })
 
-    output$tab <- renderPrint({
-      bb <- myBCI(theta = thetaa(), prior = priorr(), n = 10, z = 4, alpha = alphaa())
-      cat("BCI = [", bb[1], ",", bb[2], "]")
-      })
+    output$tab <- renderTable({
+      bci()
+    })
 }
 
-# Run the application
+# Run
 shinyApp(ui = ui, server = server)
