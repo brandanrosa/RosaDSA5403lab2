@@ -71,5 +71,5 @@ coin <- function(theta, prior, n, z, alpha = 0.05) {# theta=P(H), prior="uh, sha
   print(g)
 
   # Named List
-  list(Posterior=post, BCI=BCI, Post.Mean=postmean, Prior.Mean=priormean)
+  list(Posterior=round(post,4), BCI=BCI, Post.Mean=postmean, Prior.Mean=priormean)
 }
